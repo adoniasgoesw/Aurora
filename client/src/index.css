@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Hide scrollbar */
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
+@theme {
+  /* Shadcn-style variables for subtle border */
+  --color-border: oklch(0.239 0 0);
+  --color-border-subtle: oklch(0.239 0 0 / 0.5);
+  /* Custom font */
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  background: linear-gradient(to bottom, #ffffff, #fafafa, #ffffff);
+  min-height: 100vh;
+  transition: background 0.3s ease;
+}
+
+html.dark body {
+  background: linear-gradient(to bottom, #0a0a0a, #171717, #0a0a0a);
+}
