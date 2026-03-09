@@ -1,4 +1,4 @@
-import { createWriteStream } from 'fs';
+import { createWriteStream, existsSync } from 'fs';
 import { readdir } from 'fs/promises';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
@@ -8,6 +8,11 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const rootDir = join(__dirname, '..', '..', '..');
 const distDir = join(rootDir, 'Aurora Pro', 'dist');
 const outputPath = join(__dirname, '..', 'public', 'aurora-pro.zip');
+
+if (!existsSync(distDir)) {
+  console.warn('⚠ Aurora Pro/dist not found — skipping zip (site will build without aurora-pro.zip).');
+  process.exit(0);
+}
 
 async function zipDirectory(sourceDir, outPath) {
   const output = createWriteStream(outPath);
