@@ -1,68 +1,70 @@
 # Aurora Pro
 
-**Automatize seu fluxo criativo no Meta AI.**
+**Automate your creative workflow on Meta AI.**
 
-O **Aurora Pro** é uma extensão Chrome (Manifest V3) que automatiza a geração de imagens e animações no [Meta AI](https://meta.ai). Este repositório contém a **landing page** do produto e a documentação do sistema.
+**Aurora Pro** is a Chrome extension (Manifest V3) that automates image and animation generation on [Meta AI](https://meta.ai). This repository contains the **landing page** of the product and the system documentation.
+
+> **Note:** The Chrome extension source code is proprietary and not publicly available in this repository. The extension is distributed as a compiled and obfuscated build to protect the client's intellectual property. This repo contains only the landing page and distribution files.
 
 ---
 
-## Identificação do Projeto
+## Project Info
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| **Nome** | Aurora Pro |
-| **Versão** | 1.0.3 |
-| **Tipo** | Extensão Chrome (Manifest V3) |
-| **Autor** | Adonias Goes |
-| **Plataforma** | Meta AI (meta.ai / www.meta.ai) |
+| **Name** | Aurora Pro |
+| **Version** | 1.0.3 |
+| **Type** | Chrome Extension (Manifest V3) |
+| **Author** | Adonias Goes |
+| **Platform** | Meta AI (meta.ai / www.meta.ai) |
 
 ---
 
-## Stack e Deploy
+## Stack & Deploy
 
-| Componente | Tecnologia |
-|------------|------------|
+| Component | Technology |
+|-----------|------------|
 | **Landing** | React 19, Vite 7, Tailwind CSS v4 |
-| **Extensão** | Chrome Extension Manifest V3 |
-| **Deploy da landing** | Netlify |
+| **Extension** | Chrome Extension Manifest V3 |
+| **Landing deploy** | Netlify |
 
 ---
 
-## O que é o Aurora Pro
+## What is Aurora Pro
 
-Sistema de automação que opera sobre a página do Meta AI para:
+An automation system that runs on the Meta AI page to:
 
-1. **Enviar prompts em lote** — Um prompt por linha, processados automaticamente.
-2. **Gerar imagens** — 4 imagens por prompt via IA do Meta.
-3. **Animar imagens** — Envio automático de imagens para animação (opcional).
-4. **Organizar arquivos** — Salvamento em pastas estruturadas (`assets/images`, `assets/animations`, `assets/videos`).
+1. **Send prompts in batch** — One prompt per line, processed automatically.
+2. **Generate images** — 4 images per prompt via Meta AI.
+3. **Animate images** — Automatically sends images for animation (optional).
+4. **Organize files** — Saves to structured folders (`assets/images`, `assets/animations`, `assets/videos`).
 
-O sistema monitora o status de cada tarefa, trata erros automaticamente e permite pausar e retomar o processo.
+The system monitors each task's status, handles errors automatically, and allows pausing and resuming the process.
 
 ---
 
-## Funcionalidades
+## Features
 
-### Extensão (Meta AI)
+### Extension (Meta AI)
 
-- Prompts em lote (um por linha).
-- Geração de imagens (4 por prompt) ou vídeos diretos (1 por prompt).
-- Modo **Animar**: gera imagem → salva → envia para animação → baixa animação.
-- Fila de tarefas com status em tempo real (pendente, pausado, concluído, erro).
-- Fila de recuperação com retentativas (até 3x).
-- Timeouts e proteções contra travamento (Circuit Breaker, Watchdog).
-- Organização automática em diretório configurável.
+- Batch prompts (one per line).
+- Image generation (4 per prompt) or direct video generation (1 per prompt).
+- **Animate mode**: generate image → save → send for animation → download animation.
+- Task queue with real-time status (pending, paused, completed, error).
+- Recovery queue with retries (up to 3x).
+- Timeouts and anti-freeze protections (Circuit Breaker, Watchdog).
+- Automatic organization in a configurable directory.
 
 ### Landing Page
 
-- Alternância de idioma **EN / PT-BR**.
-- Tema **claro / escuro**.
-- Download da extensão (`aurora-pro.zip`).
-- Layout responsivo.
+- Language toggle: **EN / PT-BR**.
+- **Light / Dark** theme.
+- Extension download (`aurora-pro.zip`).
+- Responsive layout.
 
 ---
 
-## Desenvolvimento
+## Development
 
 ```bash
 cd client
@@ -70,7 +72,7 @@ npm install
 npm run dev
 ```
 
-Acesse [http://localhost:5173](http://localhost:5173).
+Open [http://localhost:5173](http://localhost:5173).
 
 ---
 
@@ -81,154 +83,154 @@ cd client
 npm run build
 ```
 
-- Gera o site estático em `client/dist/`.
-- Inclui o zip da extensão (`aurora-pro.zip`) a partir de `Aurora Pro/dist/`.
+- Generates the static site in `client/dist/`.
+- Includes the extension zip (`aurora-pro.zip`) from `Aurora Pro/dist/`.
 
 ---
 
 ## Deploy (Netlify)
 
-| Configuração | Valor |
-|--------------|-------|
+| Setting | Value |
+|---------|-------|
 | **Build command** | `npm run build` |
 | **Publish directory** | `client/dist` |
-| **Redirects** | `_redirects` em `public/` (SPA: `/* /index.html 200`) |
+| **Redirects** | `_redirects` in `public/` (SPA: `/* /index.html 200`) |
 
 ---
 
-## Estrutura do Sistema (Extensão)
+## Extension System Structure
 
-O painel flutuante da extensão é dividido em **5 abas**:
+The floating panel is divided into **5 tabs**:
 
-| Aba | Função |
-|-----|--------|
-| **Principal** | Configuração, prompts, controles e barra de progresso |
-| **Fila** | Gerenciamento e status das tarefas (prompts ou animações) |
-| **Images** | Lista de imagens geradas na sessão |
-| **Animações** | Lista de animações geradas na sessão |
-| **Pasta** | Arquivos em `assets/images` e correspondência com animações |
+| Tab | Function |
+|-----|----------|
+| **Main** | Configuration, prompts, controls and progress bar |
+| **Queue** | Task management and status (prompts or animations) |
+| **Images** | List of images generated in the session |
+| **Animations** | List of animations generated in the session |
+| **Folder** | Files in `assets/images` and their animation matches |
 
 ---
 
-### Aba Principal
+### Main Tab
 
 **Prompts**
 
-- Um prompt por linha (separados por Enter); processamento automático um a um.
+- One prompt per line (separated by Enter); processed automatically one by one.
 
-**Alternância de Animação**
+**Animation Toggle**
 
-- **Animar ativado:** Gerar imagem → Salvar → Enviar para animação → Gerar animação → Baixar.
-- **Animar desativado:** Gerar imagem → Salvar.
+- **Animate on:** Generate image → Save → Send for animation → Generate animation → Download.
+- **Animate off:** Generate image → Save.
 
-**Tipo de Geração**
+**Generation Type**
 
-- **Imagens** — 4 imagens por prompt (padrão).
-- **Vídeos** — 1 vídeo por prompt (sem etapa de imagem).
+- **Images** — 4 images per prompt (default).
+- **Videos** — 1 video per prompt (no image step).
 
-**Diretório base**
+**Base directory**
 
-- Estrutura: `[Base]/assets/images/`, `assets/animations/`, `assets/videos/`.
-- Recomendado: File System Access API (selecionar pasta).
+- Structure: `[Base]/assets/images/`, `assets/animations/`, `assets/videos/`.
+- Recommended: File System Access API (select folder).
 
-**Controles**
+**Controls**
 
-| Botão | Ação |
-|-------|------|
-| Iniciar Download | Inicia o processamento |
-| Pausar | Pausa o processo |
-| Retomar | Continua (quando há pendentes) |
-| Limpar | Remove prompts e limpa listas/estado |
-
----
-
-### Aba Fila
-
-- **Imagens:** filas de 10 prompts (`QUEUE_SIZE`); expansão por clique no cabeçalho.
-- **Animações:** lotes de 12 imagens (`ANIMATION_BATCH_SIZE`).
-
-**Cores de status**
-
-| Cor | Significado |
-|-----|-------------|
-| Azul | Pendente |
-| Laranja | Pausado |
-| Verde (✓) | Concluído |
-| Vermelho (✗) | Erro / aguardando recuperação |
-| Cinza | Animado, não baixado |
-
-**Recuperação:** falhas entram na fila de recuperação; até 3 tentativas (`MAX_RETRY_ATTEMPTS`).
+| Button | Action |
+|--------|--------|
+| Start Download | Starts processing |
+| Pause | Pauses the process |
+| Resume | Continues (when there are pending tasks) |
+| Clear | Removes prompts and clears lists/state |
 
 ---
 
-### Abas Imagens e Animações
+### Queue Tab
 
-- **Imagens:** agrupadas por prompt; nomenclatura `01. nome_do_prompt_1.jpg` (zero à esquerda).
-- **Animações:** agrupadas por prompt; `01. nome_do_prompt_1.mp4`.
-- Verde (✓) = salvo; Vermelho (✗) = não salvo.
+- **Images:** queues of 10 prompts (`QUEUE_SIZE`); expand by clicking the header.
+- **Animations:** batches of 12 images (`ANIMATION_BATCH_SIZE`).
 
----
+**Status colors**
 
-### Aba Pasta
+| Color | Meaning |
+|-------|---------|
+| Blue | Pending |
+| Orange | Paused |
+| Green (✓) | Completed |
+| Red (✗) | Error / awaiting recovery |
+| Gray | Animated, not downloaded |
 
-- Lista todos os arquivos em `assets/images` (incluindo sessões anteriores).
-- Cinza = sem animação; Amarelo = com animação correspondente em `assets/animations`.
-- Correspondência por nome base: `01. Nome_1.jpg` ↔ `01. Nome_1.mp4`.
-
----
-
-## Proteção contra Travamentos
-
-| Etapa | Timeout | Mensagem |
-|-------|---------|----------|
-| Geração de imagem | 5 min | "Meta não está respondendo." |
-| Clique em Animar | 2 min | "A extensão pode estar com problema." |
-| Processamento da animação | 5 min | "Meta não está respondendo." |
-| Watchdog (geral) | 5 min sem atividade | "Sistema travou (sem atividade)." |
-
-- **Circuit Breaker:** após 1 falha do Meta, o sistema interrompe.
-- **Watchdog:** verificação a cada 5 s.
+**Recovery:** failed items enter the recovery queue; up to 3 attempts (`MAX_RETRY_ATTEMPTS`).
 
 ---
 
-## Casos de Erro e Recuperação
+### Images & Animations Tabs
 
-**Geração:** imagem/vídeo não gerado em 5 min → para e exibe "Meta não está respondendo". Botão enviar indisponível → para após 5 min.
-
-**Animação:** imagem não enviada em 2 min → mensagem de problema na extensão; animação não gerada em 5 min → para; download falhou → item em vermelho, retentativa até 2x.
-
-**Recuperação:** prompts com falha na fila de recuperação (até 3 tentativas). Ao pausar, use **Retomar** para continuar sem perder prompts.
+- **Images:** grouped by prompt; naming pattern `01. prompt_name_1.jpg` (zero-padded).
+- **Animations:** grouped by prompt; `01. prompt_name_1.mp4`.
+- Green (✓) = saved; Red (✗) = not saved.
 
 ---
 
-## Fluxo Técnico Resumido
+### Folder Tab
 
-**Modo Imagens (sem Animar)**  
-Envia prompt → aguarda 4 imagens (5 min máx) → baixa (FS ou Chrome). Delay entre prompts: 3–6 s; entre filas: 10 s.
-
-**Modo Imagens + Animar**  
-Gera e baixa todas as imagens → aguarda 10 s → processa animações em lotes de 12 (Animar por imagem, 2 min máx; vídeo 5 min máx; download com retry até 2x).
-
-**Modo Vídeos**  
-Envia prompt → aguarda 1 vídeo (5 min máx) → baixa.
+- Lists all files in `assets/images` (including previous sessions).
+- Gray = no animation; Yellow = matching animation found in `assets/animations`.
+- Match by base name: `01. Name_1.jpg` ↔ `01. Name_1.mp4`.
 
 ---
 
-## Recomendações de Uso
+## Anti-Freeze Protection
 
-| Computador | Prompts recomendados |
-|------------|----------------------|
-| Fraco | até 50 |
-| Mediano | até 100 |
-| Potente | 100 a 200 |
+| Step | Timeout | Message |
+|------|---------|---------|
+| Image generation | 5 min | "Meta is not responding." |
+| Animate button click | 2 min | "The extension may have an issue." |
+| Animation processing | 5 min | "Meta is not responding." |
+| Watchdog (general) | 5 min without activity | "System froze (no activity)." |
 
-Comece com menos e aumente gradualmente (ex.: 10 → 20 → 30 → 50). Modo Animar reduz o limite (ex.: 50 vs 200). Desempenho depende da internet e do serviço Meta AI.
+- **Circuit Breaker:** after 1 Meta failure, the system stops.
+- **Watchdog:** checks every 5 s.
 
 ---
 
-## Estrutura de Arquivos
+## Error Cases & Recovery
 
-### Repositório (Landing + scripts)
+**Generation:** image/video not generated within 5 min → stops and shows "Meta is not responding". Submit button unavailable → stops after 5 min.
+
+**Animation:** image not sent within 2 min → extension issue message; animation not generated within 5 min → stops; download failed → item in red, retry up to 2x.
+
+**Recovery:** failed prompts enter the recovery queue (up to 3 attempts). When pausing, use **Resume** to continue without losing prompts.
+
+---
+
+## Technical Flow Summary
+
+**Image mode (no Animate)**
+Send prompt → wait for 4 images (5 min max) → download (FS or Chrome). Delay between prompts: 3–6 s; between queues: 10 s.
+
+**Image + Animate mode**
+Generate and download all images → wait 10 s → process animations in batches of 12 (Animate per image, 2 min max; video 5 min max; download with retry up to 2x).
+
+**Video mode**
+Send prompt → wait for 1 video (5 min max) → download.
+
+---
+
+## Usage Recommendations
+
+| Machine | Recommended prompts |
+|---------|---------------------|
+| Low-end | up to 50 |
+| Mid-range | up to 100 |
+| High-end | 100 to 200 |
+
+Start small and scale up gradually (e.g. 10 → 20 → 30 → 50). Animate mode reduces the limit (e.g. 50 vs 200). Performance depends on your internet connection and Meta AI's service.
+
+---
+
+## File Structure
+
+### Repository (Landing + scripts)
 
 ```
 web/
@@ -245,31 +247,38 @@ web/
 └── README.md
 ```
 
-### Extensão (Aurora Pro)
+### Extension (Aurora Pro) — proprietary, not included in this repo
 
 ```
 Aurora Pro/
 ├── manifest.json
-├── content.js          # Painel, fluxos, DOM
+├── content.js          # Panel, flows, DOM automation
 ├── content.css
 ├── background.js       # Service worker (downloads, fetch)
 ├── popup.html / popup.js / popup.css
-├── obfuscate-build.js  # Build com ofuscação
-├── dist/               # Distribuição (JS ofuscado)
+├── obfuscate-build.js  # Obfuscated build script
+├── dist/               # Distribution (obfuscated JS)
 └── icons/              # 16, 48, 128px
 ```
 
-Build da extensão: `npm run build` (gera `dist/` com JS ofuscado).
+Extension build: `npm run build` (generates `dist/` with obfuscated JS).
 
 ---
 
-## Resumo
+## Summary
 
-O Aurora Pro oferece:
+Aurora Pro delivers:
 
-- Organização automática de arquivos (imagens, animações, vídeos).
-- Monitoramento de tarefas em tempo real e fila de recuperação.
-- Controle de erros, timeouts e recuperação (pausar/retomar).
-- Landing page moderna (React 19, Vite 7, Tailwind v4) com download da extensão, temas e localização EN/PT-BR.
+- Automatic file organization (images, animations, videos).
+- Real-time task monitoring with recovery queue.
+- Error control, timeouts, and recovery (pause/resume).
+- Modern landing page (React 19, Vite 7, Tailwind v4) with extension download, theme switching, and EN/PT-BR localization.
 
-Permite gerar grandes volumes de conteúdo visual no Meta AI com mínimo esforço manual.
+Allows generating large volumes of visual content on Meta AI with minimal manual effort.
+
+---
+
+## Developer
+
+**Adonias Goes**
+GitHub: [@adoniasgoesw](https://github.com/adoniasgoesw)
